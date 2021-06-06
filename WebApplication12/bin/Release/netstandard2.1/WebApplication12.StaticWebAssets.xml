@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="/" Path="E:\leaningnetlify\WebApplication12\WebApplication12\bin\Release\netstandard2.1\wwwroot\" />
+  <ContentRoot BasePath="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication" Path="C:\Users\garga\.nuget\packages\microsoft.aspnetcore.components.webassembly.authentication\5.0.6\build\..\staticwebassets\" />
+</StaticWebAssets>
