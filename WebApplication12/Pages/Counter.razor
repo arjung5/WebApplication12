@@ -2,64 +2,337 @@
 @using System.Net.Http
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
+@using WebApplication12.Shared.Contracts
+@using Newtonsoft.Json
 @inject HttpClient Http
 
-<h1>ToDo Request</h1>
-
-<button @onclick="PostRequest">Submit POST request</button>
-
-<p>Response body returned by the server:</p>
-
-<p>@responseBody</p>
-@if (!string.IsNullOrEmpty(responseBody))
+<p>
+    <div>
+        Finding Slots In <em>DELHI</em>
+    </div>
+</p>
+<p>
+    <span>
+        Enter Date : dd/mm/yyyy(optional)
+    </span>
+    <span>
+        <input placeholder="@date" @bind-value="@date" />
+    </span>
+</p>
+<p>
+    <span>
+        Enter Dose : first or second
+    </span>
+    <span>
+        <input placeholder="First/Second" @bind-value="@doseinp" />
+    </span>
+</p>
+<p>
+    <span>
+        Enter Vaccine : COVISHIELD or COVAXIN
+    </span>
+    <span>
+        <input placeholder="Covishield/Covaxin" @bind-value="@vaccine" />
+    </span>
+</p>
+<p>
+    <span>
+        Enter AgeGroup Above 45 Or Below :
+    </span>
+    <span>
+        <input placeholder="above/below" @bind-value="@ageGrp" />
+    </span>
+</p>
+<button @onclick="FindCenters">Find Centers</button>
+@if (flag)
 {
-    @responseBody;
+    @if (flagSlot)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        if (slotResponse.slot.Count != 0)
+        {
+            <p>
+                Slots Available: @slotResponse.slot.Count
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Dose</th>
+                        <th>Address</th>
+                        <th>District Name</th>
+                        <th>Fee</th>
+                        <th>Min_Age_Limit</th>
+                        <th>Name</th>
+                        <th>Pincode</th>
+                        <th>State Name</th>
+                        <th>Vaccine</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var slots in slotResponse.slot)
+                    {
+                        <tr>
+                            @if (slots.available_capacity_dose1 != 0)
+                            {
+                                <td>@slots.available_capacity_dose1</td>
+                            }
+                            else if (slots.available_capacity_dose2 != 0)
+                            {
+                                <td>@slots.available_capacity_dose2</td>
+                            }
+
+                            <td>@slots.address</td>
+                            <td>@slots.district_name</td>
+                            <td>@slots.fee</td>
+                            <td>@slots.min_age_limit</td>
+                            <td>@slots.name</td>
+                            <td>@slots.pincode</td>
+                            <td>@slots.state_name</td>
+                            <td>@slots.vaccine</td>
+                        </tr>
+
+
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No Slots are Present</p>
+        }
+    }
 }
+
 
 @code {
     private string responseBody;
+    private string forecasts;
+    private string dose;
+    private string vaccine;
+    private string ageGrp;
+    private bool flagSlot;
+    private string date;
+    private string doseinp;
 
-    private async Task PostRequest()
+    private List<string> templates;
+
+    private bool flag;
+    private bool finalFlag;
+
+    public List<string> pincodes;
+
+    public SlotResponse slotResponse;
+
+    protected override Task OnInitializedAsync()
     {
+        flag = false;
+        flagSlot = true;
         DateTime dateTime = DateTime.UtcNow.Date;
-        var dateInp = dateTime.ToString("dd/MM/yyyy");
-        var requestMessage = new HttpRequestMessage()
-        {
-            Method = new HttpMethod("GET"),
-            RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=110085&date=09-06-2021&vaccine=COVISHIELD"),
-            //Content =
-            //    JsonContent.Create(new TodoItem
-            //    {
-            //        Name = "My New Todo Item",
-            //        IsComplete = false
-            //    })
-
-        };
-        var response = await Http.SendAsync(requestMessage);
-        var responseStatusCode = response.StatusCode;
-
-        responseBody = await response.Content.ReadAsStringAsync();
-        //var tokenResult = await TokenProvider.RequestAccessToken();
-
-        //if (tokenResult.TryGetToken(out var token))
-        //{
-        //    requestMessage.Headers.Authorization =
-        //        new AuthenticationHeaderValue("Bearer", token.Value);
-
-        //    requestMessage.Content.Headers.TryAddWithoutValidation(
-        //        "x-custom-header", "value");
-
-        //    var response = await Http.SendAsync(requestMessage);
-        //    var responseStatusCode = response.StatusCode;
-
-        //    responseBody = await response.Content.ReadAsStringAsync();
-        //}
+        date = dateTime.ToString("dd/MM/yyyy");
+        pincodes = new List<string>();
+        return base.OnInitializedAsync();
     }
 
-    public class TodoItem
+    public async Task FindCenters()
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public bool IsComplete { get; set; }
+        if (flag)
+        {
+            flag = false;
+        }
+        slotResponse = new SlotResponse();
+        flag = true;
+        flagSlot = true;
+        slotResponse.slot = new List<slot>();
+
+        var dateinp = date;
+        if (string.IsNullOrEmpty(date))
+        {
+            dateinp = "nothing";
+        }
+        else
+        {
+            dateinp = dateinp.Replace('/', '@');
+        }
+
+        try
+        {
+            dose = doseinp;
+            if (dose.ToLower() == "first")
+            {
+                dose = "available_capacity_dose1";
+            }
+            else if (dose.ToLower() == "second")
+            {
+                dose = "available_capacity_dose2";
+            }
+            for (int i = 110001; i <= 110096; i++)
+            {
+                pincodes.Add(i.ToString());
+            }
+            var age = 0;
+            if (ageGrp.ToLower() == "above")
+            {
+                age = 45;
+            }
+            if (date == "nothing")
+            {
+                DateTime dateTime = DateTime.UtcNow.Date;
+                date = dateTime.ToString("dd/MM/yyyy");
+            }
+            if (vaccine.Contains("x") || vaccine.Contains("X"))
+            {
+                vaccine = "COVAXIN";
+            }
+            else
+            {
+                vaccine = "COVISHIELD";
+            }
+            foreach (var pincode in pincodes)
+            {
+                var requestMessage = new HttpRequestMessage()
+                {
+                    Method = new HttpMethod("GET"),
+                    RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=" + pincode + "&date=" + date + "&vaccine=" + vaccine)
+                };
+                var response = await Http.SendAsync(requestMessage);
+                var responseStatusCode = response.StatusCode;
+                var asd = responseStatusCode.ToString();
+                if (responseStatusCode.ToString() == "OK")
+                {
+                    var strContent = await response.Content.ReadAsStringAsync();
+                    var responseFromSlot = JsonConvert.DeserializeObject<Root>(strContent);
+                    foreach (var value in responseFromSlot.sessions)
+                    {
+                        slot slot = new slot();
+                        if (age >= 45)
+                        {
+                            if (dose == "available_capacity_dose1")
+                            {
+                                if (value.available_capacity_dose1 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
+                                {
+                                    slot.address = value.address;
+                                    slot.available_capacity_dose1 = value.available_capacity_dose1;
+                                    slot.district_name = value.district_name;
+                                    slot.fee = value.fee;
+                                    slot.pincode = value.pincode;
+                                    slot.name = value.name;
+                                    slot.vaccine = value.vaccine;
+                                    slot.min_age_limit = value.min_age_limit;
+                                    slot.state_name = value.state_name;
+                                    slotResponse.slot.Add(slot);
+                                }
+                            }
+                            else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
+                            {
+                                slot.address = value.address;
+                                slot.available_capacity_dose1 = value.available_capacity_dose2;
+                                slot.district_name = value.district_name;
+                                slot.fee = value.fee;
+                                slot.pincode = value.pincode;
+                                slot.name = value.name;
+                                slot.vaccine = value.vaccine;
+                                slot.min_age_limit = value.min_age_limit;
+                                slot.state_name = value.state_name;
+                                slotResponse.slot.Add(slot);
+                            }
+                        }
+                        else
+                        {
+                            if (dose == "available_capacity_dose1")
+                            {
+                                if (value.available_capacity_dose1 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
+                                {
+                                    slot.address = value.address;
+                                    slot.available_capacity_dose1 = value.available_capacity_dose1;
+                                    slot.district_name = value.district_name;
+                                    slot.fee = value.fee;
+                                    slot.pincode = value.pincode;
+                                    slot.name = value.name;
+                                    slot.vaccine = value.vaccine;
+                                    slot.min_age_limit = value.min_age_limit;
+                                    slot.state_name = value.state_name;
+                                    slotResponse.slot.Add(slot);
+                                }
+                            }
+                            else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
+                            {
+                                slot.address = value.address;
+                                slot.available_capacity_dose1 = value.available_capacity_dose2;
+                                slot.district_name = value.district_name;
+                                slot.fee = value.fee;
+                                slot.pincode = value.pincode;
+                                slot.name = value.name;
+                                slot.min_age_limit = value.min_age_limit;
+                                slot.state_name = value.state_name;
+                                slot.vaccine = value.vaccine;
+                                slotResponse.slot.Add(slot);
+                            }
+                        }
+                    }
+                }
+            }
+            if (slotResponse.slot.Count != 0)
+            {
+                flagSlot = false;
+                StateHasChanged();
+            }
+            else
+            {
+                flagSlot = false;
+                StateHasChanged();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
     }
+
+    //private async Task PostRequest()
+    //{
+    //    DateTime dateTime = DateTime.UtcNow.Date;
+    //    var dateInp = dateTime.ToString("dd/MM/yyyy");
+    //    var requestMessage = new HttpRequestMessage()
+    //    {
+    //        Method = new HttpMethod("GET"),
+    //        RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=110085&date=09-06-2021&vaccine=COVISHIELD"),
+    //        //Content =
+    //        //    JsonContent.Create(new TodoItem
+    //        //    {
+    //        //        Name = "My New Todo Item",
+    //        //        IsComplete = false
+    //        //    })
+
+    //    };
+    //    var response = await Http.SendAsync(requestMessage);
+    //    var responseStatusCode = response.StatusCode;
+
+    //    responseBody = await response.Content.ReadAsStringAsync();
+    //    //var tokenResult = await TokenProvider.RequestAccessToken();
+
+    //    //if (tokenResult.TryGetToken(out var token))
+    //    //{
+    //    //    requestMessage.Headers.Authorization =
+    //    //        new AuthenticationHeaderValue("Bearer", token.Value);
+
+    //    //    requestMessage.Content.Headers.TryAddWithoutValidation(
+    //    //        "x-custom-header", "value");
+
+    //    //    var response = await Http.SendAsync(requestMessage);
+    //    //    var responseStatusCode = response.StatusCode;
+
+    //    //    responseBody = await response.Content.ReadAsStringAsync();
+    //    //}
+    //}
+
+    //public class TodoItem
+    //{
+    //    public long Id { get; set; }
+    //    public string Name { get; set; }
+    //    public bool IsComplete { get; set; }
+    //}
 }

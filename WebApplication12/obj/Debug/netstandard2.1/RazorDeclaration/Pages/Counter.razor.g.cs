@@ -82,6 +82,20 @@ using System.Net.Http.Json;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Counter.razor"
+using WebApplication12.Shared.Contracts;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Counter.razor"
+using Newtonsoft.Json;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/counter")]
     public partial class Counter : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -91,53 +105,235 @@ using System.Net.Http.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 19 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Counter.razor"
+#line 110 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Counter.razor"
        
     private string responseBody;
+    private string forecasts;
+    private string dose;
+    private string vaccine;
+    private string ageGrp;
+    private bool flagSlot;
+    private string date;
+    private string doseinp;
 
-    private async Task PostRequest()
+    private List<string> templates;
+
+    private bool flag;
+    private bool finalFlag;
+
+    public List<string> pincodes;
+
+    public SlotResponse slotResponse;
+
+    protected override Task OnInitializedAsync()
     {
+        flag = false;
+        flagSlot = true;
         DateTime dateTime = DateTime.UtcNow.Date;
-        var dateInp = dateTime.ToString("dd/MM/yyyy");
-        var requestMessage = new HttpRequestMessage()
-        {
-            Method = new HttpMethod("GET"),
-            RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=110085&date=09-06-2021&vaccine=COVISHIELD"),
-            //Content =
-            //    JsonContent.Create(new TodoItem
-            //    {
-            //        Name = "My New Todo Item",
-            //        IsComplete = false
-            //    })
-
-        };
-        var response = await Http.SendAsync(requestMessage);
-        var responseStatusCode = response.StatusCode;
-
-        responseBody = await response.Content.ReadAsStringAsync();
-        //var tokenResult = await TokenProvider.RequestAccessToken();
-
-        //if (tokenResult.TryGetToken(out var token))
-        //{
-        //    requestMessage.Headers.Authorization =
-        //        new AuthenticationHeaderValue("Bearer", token.Value);
-
-        //    requestMessage.Content.Headers.TryAddWithoutValidation(
-        //        "x-custom-header", "value");
-
-        //    var response = await Http.SendAsync(requestMessage);
-        //    var responseStatusCode = response.StatusCode;
-
-        //    responseBody = await response.Content.ReadAsStringAsync();
-        //}
+        date = dateTime.ToString("dd/MM/yyyy");
+        pincodes = new List<string>();
+        return base.OnInitializedAsync();
     }
 
-    public class TodoItem
+    public async Task FindCenters()
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public bool IsComplete { get; set; }
+        if (flag)
+        {
+            flag = false;
+        }
+        slotResponse = new SlotResponse();
+        flag = true;
+        flagSlot = true;
+        slotResponse.slot = new List<slot>();
+
+        var dateinp = date;
+        if (string.IsNullOrEmpty(date))
+        {
+            dateinp = "nothing";
+        }
+        else
+        {
+            dateinp = dateinp.Replace('/', '@');
+        }
+
+        try
+        {
+            dose = doseinp;
+            if (dose.ToLower() == "first")
+            {
+                dose = "available_capacity_dose1";
+            }
+            else if (dose.ToLower() == "second")
+            {
+                dose = "available_capacity_dose2";
+            }
+            for (int i = 110001; i <= 110096; i++)
+            {
+                pincodes.Add(i.ToString());
+            }
+            var age = 0;
+            if (ageGrp.ToLower() == "above")
+            {
+                age = 45;
+            }
+            if (date == "nothing")
+            {
+                DateTime dateTime = DateTime.UtcNow.Date;
+                date = dateTime.ToString("dd/MM/yyyy");
+            }
+            if (vaccine.Contains("x") || vaccine.Contains("X"))
+            {
+                vaccine = "COVAXIN";
+            }
+            else
+            {
+                vaccine = "COVISHIELD";
+            }
+            foreach (var pincode in pincodes)
+            {
+                var requestMessage = new HttpRequestMessage()
+                {
+                    Method = new HttpMethod("GET"),
+                    RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=" + pincode + "&date=" + date + "&vaccine=" + vaccine)
+                };
+                var response = await Http.SendAsync(requestMessage);
+                var responseStatusCode = response.StatusCode;
+                var asd = responseStatusCode.ToString();
+                if (responseStatusCode.ToString() == "OK")
+                {
+                    var strContent = await response.Content.ReadAsStringAsync();
+                    var responseFromSlot = JsonConvert.DeserializeObject<Root>(strContent);
+                    foreach (var value in responseFromSlot.sessions)
+                    {
+                        slot slot = new slot();
+                        if (age >= 45)
+                        {
+                            if (dose == "available_capacity_dose1")
+                            {
+                                if (value.available_capacity_dose1 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
+                                {
+                                    slot.address = value.address;
+                                    slot.available_capacity_dose1 = value.available_capacity_dose1;
+                                    slot.district_name = value.district_name;
+                                    slot.fee = value.fee;
+                                    slot.pincode = value.pincode;
+                                    slot.name = value.name;
+                                    slot.vaccine = value.vaccine;
+                                    slot.min_age_limit = value.min_age_limit;
+                                    slot.state_name = value.state_name;
+                                    slotResponse.slot.Add(slot);
+                                }
+                            }
+                            else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
+                            {
+                                slot.address = value.address;
+                                slot.available_capacity_dose1 = value.available_capacity_dose2;
+                                slot.district_name = value.district_name;
+                                slot.fee = value.fee;
+                                slot.pincode = value.pincode;
+                                slot.name = value.name;
+                                slot.vaccine = value.vaccine;
+                                slot.min_age_limit = value.min_age_limit;
+                                slot.state_name = value.state_name;
+                                slotResponse.slot.Add(slot);
+                            }
+                        }
+                        else
+                        {
+                            if (dose == "available_capacity_dose1")
+                            {
+                                if (value.available_capacity_dose1 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
+                                {
+                                    slot.address = value.address;
+                                    slot.available_capacity_dose1 = value.available_capacity_dose1;
+                                    slot.district_name = value.district_name;
+                                    slot.fee = value.fee;
+                                    slot.pincode = value.pincode;
+                                    slot.name = value.name;
+                                    slot.vaccine = value.vaccine;
+                                    slot.min_age_limit = value.min_age_limit;
+                                    slot.state_name = value.state_name;
+                                    slotResponse.slot.Add(slot);
+                                }
+                            }
+                            else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
+                            {
+                                slot.address = value.address;
+                                slot.available_capacity_dose1 = value.available_capacity_dose2;
+                                slot.district_name = value.district_name;
+                                slot.fee = value.fee;
+                                slot.pincode = value.pincode;
+                                slot.name = value.name;
+                                slot.min_age_limit = value.min_age_limit;
+                                slot.state_name = value.state_name;
+                                slot.vaccine = value.vaccine;
+                                slotResponse.slot.Add(slot);
+                            }
+                        }
+                    }
+                }
+            }
+            if (slotResponse.slot.Count != 0)
+            {
+                flagSlot = false;
+                StateHasChanged();
+            }
+            else
+            {
+                flagSlot = false;
+                StateHasChanged();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
     }
+
+    //private async Task PostRequest()
+    //{
+    //    DateTime dateTime = DateTime.UtcNow.Date;
+    //    var dateInp = dateTime.ToString("dd/MM/yyyy");
+    //    var requestMessage = new HttpRequestMessage()
+    //    {
+    //        Method = new HttpMethod("GET"),
+    //        RequestUri = new Uri("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=110085&date=09-06-2021&vaccine=COVISHIELD"),
+    //        //Content =
+    //        //    JsonContent.Create(new TodoItem
+    //        //    {
+    //        //        Name = "My New Todo Item",
+    //        //        IsComplete = false
+    //        //    })
+
+    //    };
+    //    var response = await Http.SendAsync(requestMessage);
+    //    var responseStatusCode = response.StatusCode;
+
+    //    responseBody = await response.Content.ReadAsStringAsync();
+    //    //var tokenResult = await TokenProvider.RequestAccessToken();
+
+    //    //if (tokenResult.TryGetToken(out var token))
+    //    //{
+    //    //    requestMessage.Headers.Authorization =
+    //    //        new AuthenticationHeaderValue("Bearer", token.Value);
+
+    //    //    requestMessage.Content.Headers.TryAddWithoutValidation(
+    //    //        "x-custom-header", "value");
+
+    //    //    var response = await Http.SendAsync(requestMessage);
+    //    //    var responseStatusCode = response.StatusCode;
+
+    //    //    responseBody = await response.Content.ReadAsStringAsync();
+    //    //}
+    //}
+
+    //public class TodoItem
+    //{
+    //    public long Id { get; set; }
+    //    public string Name { get; set; }
+    //    public bool IsComplete { get; set; }
+    //}
 
 #line default
 #line hidden

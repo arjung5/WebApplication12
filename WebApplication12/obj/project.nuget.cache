@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J490cD5mSAXqJTdpzdhMgqE+eOmK2P+WvF9oKGTDKcatHLLOdu1/fKml5RTNI57RUgnW9Iy1Ebhu247m8mKjSQ==",
+  "dgSpecHash": "AA3CLOHJsE2dRZzHn1Twy+y41IlNXdE46sLa7drKzTV5vIOfONwTC0lem3eepVKEHe4+ENdG2Rphh5PM75nDgg==",
   "success": true,
   "projectFilePath": "E:\\leaningnetlify\\WebApplication12\\WebApplication12\\WebApplication12.csproj",
   "expectedPackageFiles": [
@@ -33,6 +33,7 @@
     "C:\\Users\\garga\\.nuget\\packages\\microsoft.extensions.primitives\\3.1.6\\microsoft.extensions.primitives.3.1.6.nupkg.sha512",
     "C:\\Users\\garga\\.nuget\\packages\\microsoft.jsinterop\\3.1.6\\microsoft.jsinterop.3.1.6.nupkg.sha512",
     "C:\\Users\\garga\\.nuget\\packages\\microsoft.jsinterop.webassembly\\3.2.1\\microsoft.jsinterop.webassembly.3.2.1.nupkg.sha512",
+    "C:\\Users\\garga\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\garga\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\garga\\.nuget\\packages\\system.componentmodel.annotations\\4.7.0\\system.componentmodel.annotations.4.7.0.nupkg.sha512",
     "C:\\Users\\garga\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",

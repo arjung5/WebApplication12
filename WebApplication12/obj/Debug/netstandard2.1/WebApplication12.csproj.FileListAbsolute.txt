@@ -355,6 +355,12 @@ E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Web
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.csproj.CopyComplete
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.dll
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.pdb
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\HKiYk8MzbqItfuyEpOAN9bPP3PKJI6jdz6qOOTw8E2c=.hash
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\eG-sGVdEugXDbyfU1tB7IiF1uKUiL9dscmjwziSmYK0=.hash
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\V7Ic1KKOXi2uQi4Os4pnnBShxuagjQ_Sx5hCtLeu1QE=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\bin\Debug\netstandard2.1\wwwroot\_framework\_bin\Newtonsoft.Json.dll
+E:\leaningnetlify\WebApplication12\WebApplication12\bin\Debug\netstandard2.1\wwwroot\_framework\_bin\Newtonsoft.Json.dll.gz
+E:\leaningnetlify\WebApplication12\WebApplication12\bin\Debug\netstandard2.1\Newtonsoft.Json.dll
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\cs8pHUurDt0IqbB8YXPh560au3q3J-1wRL9jBddRVmE=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\compressed\_framework\_bin\Newtonsoft.Json.dll.gz
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\compressed\_framework\_bin\Newtonsoft.Json.dll.br
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\ybu25WAjGn3WgWhqi6eraubucwqQBzQ-uuzd7ivts9E=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\mJo07E01tHEs-I7W9kuaZxgodXokXZewDj9miP08CoA=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\GuiEkEEVrJRa3u8gxjzBxTQSkxCSxpTpnxNyRqWSdO0=.hash
