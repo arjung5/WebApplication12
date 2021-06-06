@@ -1,0 +1,90 @@
+﻿@page "/component"
+
+<form>
+    <div>
+        @foreach (var item in Enum.GetNames(typeof(Question.VaccineType)))
+        {
+            <span>
+                <input type="radio" name="question1" id="@item" value="@item" @onchange="SelectionChangedVaccineType" checked=@(selectedAnswer.Equals(item,StringComparison.OrdinalIgnoreCase)) />
+                <label for="@item">@item</label>
+            </span>
+        }
+    </div>
+</form>
+<form>
+    <div>
+        @foreach (var item in Enum.GetNames(typeof(Question.Dosage)))
+        {
+            <span>
+                <input type="radio" name="question1" id="@item" value="@item" @onchange="SelectionChangedDosage" checked=@(selectedAnswer.Equals(item,StringComparison.OrdinalIgnoreCase)) />
+                <label for="@item">@item</label>
+            </span>
+        }
+    </div>
+</form>
+<form>
+    <div>
+        @foreach (var item in Enum.GetNames(typeof(Question.AgeGroup)))
+        {
+            <span>
+                <input type="radio" name="question1" id="@item" value="@item" @onchange="SelectionChangedAgeGroup" checked=@(selectedAnswer.Equals(item,StringComparison.OrdinalIgnoreCase)) />
+                <label for="@item">@item</label>
+            </span>
+        }
+    </div>
+</form>
+<div>
+    <label>Selected answer is @selectedAnswer</label>
+    <label>Selected vaccine is @vaccine</label>
+    <label>Selected dosage is @dosage</label>
+    <label>Selected AgeGroup is @age</label>
+</div>
+<button type="button" @onclick="@OnSubmit">Submit</button>
+@code {
+
+    string vaccine = "";
+    string dosage = "";
+    string selectedAnswer = "";
+    string age = "";
+
+    void SelectionChanged(ChangeEventArgs args)
+    {
+        selectedAnswer = args.Value.ToString();
+    }
+
+    void SelectionChangedVaccineType(ChangeEventArgs args)
+    {
+        vaccine = args.Value.ToString();
+    }
+
+    void SelectionChangedDosage(ChangeEventArgs args)
+    {
+        dosage = args.Value.ToString();
+    }
+    void SelectionChangedAgeGroup(ChangeEventArgs args)
+    {
+        age = args.Value.ToString();
+    }
+
+
+
+    Question question = new Question { QuestionText = "What is the color of the sky" };
+
+
+    public void OnSubmit()
+    {
+
+        Console.WriteLine(selectedAnswer);
+
+    }
+
+    public class Question
+    {
+        public string QuestionText { get; set; }
+        public enum Colors { Red, Green, Blue, Yellow };
+        public enum VaccineType { Covishield, Covaxin };
+        public enum AgeGroup { Above45, Below45 };
+        public enum Dosage { First, Second };
+
+    }
+}

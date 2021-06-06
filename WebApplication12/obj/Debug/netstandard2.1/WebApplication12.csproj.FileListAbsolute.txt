@@ -3,7 +3,6 @@ E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Web
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.AssemblyInfo.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.RazorComponent.input.cache
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\App.razor.g.cs
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Pages\Counter.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Pages\FetchData.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Pages\Index.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Shared\MainLayout.razor.g.cs
@@ -168,7 +167,6 @@ E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Web
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.TagHelpers.output.cache
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\WebApplication12.RazorCoreGenerate.cache
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\App.razor.g.cs
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Pages\Counter.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Pages\FetchData.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Pages\Index.razor.g.cs
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Shared\MainLayout.razor.g.cs
@@ -361,6 +359,10 @@ E:\leaningnetlify\WebApplication12\WebApplication12\bin\Debug\netstandard2.1\New
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\cs8pHUurDt0IqbB8YXPh560au3q3J-1wRL9jBddRVmE=.hash
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\compressed\_framework\_bin\Newtonsoft.Json.dll.gz
 E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\compressed\_framework\_bin\Newtonsoft.Json.dll.br
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\ybu25WAjGn3WgWhqi6eraubucwqQBzQ-uuzd7ivts9E=.hash
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\mJo07E01tHEs-I7W9kuaZxgodXokXZewDj9miP08CoA=.hash
-E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\GuiEkEEVrJRa3u8gxjzBxTQSkxCSxpTpnxNyRqWSdO0=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Pages\Component.razor.g.cs
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Pages\Component.razor.g.cs
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\RazorDeclaration\Pages\Slots.razor.g.cs
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\Razor\Pages\Slots.razor.g.cs
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\82XhqU5jQKvwduDxSW8k_oWYpXdyseUAGwXnjYeocuc=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\Bq0t6kiAVmBZwTWK3UocJhtNX_oSQZKt1FHgDh95cao=.hash
+E:\leaningnetlify\WebApplication12\WebApplication12\obj\Debug\netstandard2.1\integrity\TPzkZ0IGkeBhKGDTVFv5FEHdWSu7RTdLf8UX2_j9At0=.hash
