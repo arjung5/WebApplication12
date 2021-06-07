@@ -1,4 +1,4 @@
-﻿@page "/slots"
+﻿@page "/"
 @using System.Net.Http
 @using System.Net.Http.Headers
 @using System.Net.Http.Json
@@ -52,33 +52,10 @@
         }
     </div>
 </form>
-@*<p>
-        <span>
-            Enter Dose : first or second
-        </span>
-        <span>
-            <input placeholder="First/Second" @bind-value="@doseinp" />
-        </span>
-    </p>
-    <p>
-        <span>
-            Enter Vaccine : COVISHIELD or COVAXIN
-        </span>
-        <span>
-            <input placeholder="Covishield/Covaxin" @bind-value="@vaccine" />
-        </span>
-    </p>
-    <p>
-        <span>
-            Enter AgeGroup Above 45 Or Below :
-        </span>
-        <span>
-            <input placeholder="above/below" @bind-value="@ageGrp" />
-        </span>
-    </p>*@
-
-<button class="buttonarjun" @onclick="FindCenters">Find Centers</button>
-@*<button class="ba" ></button>*@
+@if (!string.IsNullOrEmpty(vaccine) && !string.IsNullOrEmpty(dose) && !string.IsNullOrEmpty(ageGrp))
+{
+    <button class="buttonarjun" @onclick="FindCenters">Find Centers</button>
+}
 @if (flag)
 {
     @if (flagSlot)
@@ -89,54 +66,61 @@
     {
         if (slotResponse.slot.Count != 0)
         {
-            <p>
+            <p class="margin-top-10">
                 Slots Available: @slotResponse.slot.Count
             </p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Dose</th>
-                        <th>Address</th>
-                        <th>District Name</th>
-                        <th>Fee</th>
-                        <th>Min_Age_Limit</th>
-                        <th>Name</th>
-                        <th>Pincode</th>
-                        <th>State Name</th>
-                        <th>Vaccine</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var slots in slotResponse.slot)
-                    {
-                        <tr>
-                            @if (slots.available_capacity_dose1 != 0)
-                            {
-                                <td>@slots.available_capacity_dose1</td>
-                            }
-                            else if (slots.available_capacity_dose2 != 0)
-                            {
-                                <td>@slots.available_capacity_dose2</td>
-                            }
+            <div class="grid-container">
+                <div class="grid-x">
+                    <div class="cell small-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Dose</th>
+                                    <th>Address</th>
+                                    <th>District Name</th>
+                                    <th>Fee</th>
+                                    <th>Min_Age_Limit</th>
+                                    <th>Name</th>
+                                    <th>Pincode</th>
+                                    <th>State Name</th>
+                                    <th>Vaccine</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var slots in slotResponse.slot)
+                                {
+                                    <tr>
+                                        @if (slots.available_capacity_dose1 != 0)
+                                        {
+                                            <td>@slots.available_capacity_dose1</td>
+                                        }
+                                        else if (slots.available_capacity_dose2 != 0)
+                                        {
+                                            <td>@slots.available_capacity_dose2</td>
+                                        }
 
-                            <td>@slots.address</td>
-                            <td>@slots.district_name</td>
-                            <td>@slots.fee</td>
-                            <td>@slots.min_age_limit</td>
-                            <td>@slots.name</td>
-                            <td>@slots.pincode</td>
-                            <td>@slots.state_name</td>
-                            <td>@slots.vaccine</td>
-                        </tr>
+                                        <td>@slots.address</td>
+                                        <td>@slots.district_name</td>
+                                        <td>@slots.fee</td>
+                                        <td>@slots.min_age_limit</td>
+                                        <td>@slots.name</td>
+                                        <td>@slots.pincode</td>
+                                        <td>@slots.state_name</td>
+                                        <td>@slots.vaccine</td>
+                                    </tr>
 
 
-                    }
-                </tbody>
-            </table>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         }
         else
         {
-            <p>Sorry , No Slots are Present</p>
+            <p class="margin-top-10">Sorry , No Slots are Present</p>
         }
     }
 }
@@ -151,6 +135,8 @@
     private bool flagSlot;
     private string date;
     private string doseinp;
+
+    private string buttondisabled = "";
 
     private List<string> templates;
 
@@ -299,6 +285,8 @@
                                     slot.min_age_limit = value.min_age_limit;
                                     slot.state_name = value.state_name;
                                     slotResponse.slot.Add(slot);
+                                    flagSlot = false;
+                                    StateHasChanged();
                                 }
                             }
                             else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
@@ -313,6 +301,8 @@
                                 slot.min_age_limit = value.min_age_limit;
                                 slot.state_name = value.state_name;
                                 slotResponse.slot.Add(slot);
+                                flagSlot = false;
+                                StateHasChanged();
                             }
                         }
                         else
@@ -331,6 +321,8 @@
                                     slot.min_age_limit = value.min_age_limit;
                                     slot.state_name = value.state_name;
                                     slotResponse.slot.Add(slot);
+                                    flagSlot = false;
+                                    StateHasChanged();
                                 }
                             }
                             else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
@@ -345,6 +337,8 @@
                                 slot.state_name = value.state_name;
                                 slot.vaccine = value.vaccine;
                                 slotResponse.slot.Add(slot);
+                                flagSlot = false;
+                                StateHasChanged();
                             }
                         }
                     }

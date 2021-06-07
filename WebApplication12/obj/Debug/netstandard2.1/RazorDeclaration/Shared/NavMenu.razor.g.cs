@@ -83,7 +83,7 @@ using WebApplication12.Shared;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 28 "E:\leaningnetlify\WebApplication12\WebApplication12\Shared\NavMenu.razor"
+#line 18 "E:\leaningnetlify\WebApplication12\WebApplication12\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

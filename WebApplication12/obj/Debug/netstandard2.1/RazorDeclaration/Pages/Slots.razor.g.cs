@@ -96,7 +96,7 @@ using Newtonsoft.Json;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/slots")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Slots : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -105,7 +105,7 @@ using Newtonsoft.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 145 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
+#line 129 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
        
     private string responseBody;
     private string forecasts;
@@ -115,6 +115,8 @@ using Newtonsoft.Json;
     private bool flagSlot;
     private string date;
     private string doseinp;
+
+    private string buttondisabled = "";
 
     private List<string> templates;
 
@@ -263,6 +265,8 @@ using Newtonsoft.Json;
                                     slot.min_age_limit = value.min_age_limit;
                                     slot.state_name = value.state_name;
                                     slotResponse.slot.Add(slot);
+                                    flagSlot = false;
+                                    StateHasChanged();
                                 }
                             }
                             else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 45)
@@ -277,6 +281,8 @@ using Newtonsoft.Json;
                                 slot.min_age_limit = value.min_age_limit;
                                 slot.state_name = value.state_name;
                                 slotResponse.slot.Add(slot);
+                                flagSlot = false;
+                                StateHasChanged();
                             }
                         }
                         else
@@ -295,6 +301,8 @@ using Newtonsoft.Json;
                                     slot.min_age_limit = value.min_age_limit;
                                     slot.state_name = value.state_name;
                                     slotResponse.slot.Add(slot);
+                                    flagSlot = false;
+                                    StateHasChanged();
                                 }
                             }
                             else if (value.available_capacity_dose2 > 0 && vaccine == value.vaccine && value.min_age_limit == 18)
@@ -309,6 +317,8 @@ using Newtonsoft.Json;
                                 slot.state_name = value.state_name;
                                 slot.vaccine = value.vaccine;
                                 slotResponse.slot.Add(slot);
+                                flagSlot = false;
+                                StateHasChanged();
                             }
                         }
                     }
