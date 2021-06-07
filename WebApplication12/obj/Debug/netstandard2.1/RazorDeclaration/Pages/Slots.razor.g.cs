@@ -105,7 +105,7 @@ using Newtonsoft.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 182 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
+#line 185 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
        
     private string responseBody;
     private string forecasts;

@@ -33,6 +33,7 @@
 </p>*@
 <form>
     <div>
+        <h5 style="display:inline">Please Choose Vaccine Type:- </h5>
         @foreach (var item in Enum.GetNames(typeof(Question.VaccineType)))
         {
             <span>
@@ -44,6 +45,7 @@
 </form>
 <form>
     <div>
+        <h5 style="display:inline">Please Choose Dosage Type:- </h5>
         @foreach (var item in Enum.GetNames(typeof(Question.Dosage)))
         {
             <span>
@@ -55,6 +57,7 @@
 </form>
 <form>
     <div>
+        <h5 style="display:inline">Please Choose AgeGroup Type:- </h5>
         @foreach (var item in Enum.GetNames(typeof(Question.AgeGroup)))
         {
             <span>
