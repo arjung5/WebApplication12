@@ -11,14 +11,26 @@
         Finding Slots In <em>DELHI</em>
     </div>
 </p>
-<p>
+<div class="grid-container" style="margin:0;padding:0">
+    <div class="grid-x">
+        <div class="cell small-12 medium-3 large-3">
+            <form>
+                <label for="birthday">Date: </label>
+                <input type="date" id="birthday" name="birthday" @bind-value="@datetime">
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<p>
+
     <span>
         Enter Date : dd/mm/yyyy(optional)
     </span>
     <span>
         <input placeholder="@date" @bind-value="@date" />
     </span>
-</p>
+</p>*@
 <form>
     <div>
         @foreach (var item in Enum.GetNames(typeof(Question.VaccineType)))
@@ -78,23 +90,23 @@
 
                                     @foreach (var slots in slotResponse.slot)
                                     {
-                                    <div class="cell small-12 panel callout radius">
-                                        @if (slots.available_capacity_dose1 != 0)
-                                        {
-                                            <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose1</span></p>
-                                        }
-                                        else if (slots.available_capacity_dose2 != 0)
-                                        {
-                                            <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose2</span></p>
-                                        }
-                                        <p><h4 style="display:inline;font-size:large">Address: </h4><span>@slots.address</span></p>
-                                        <p><h4 style="display:inline;font-size:large">Name: </h4><span>@slots.name</span></p>
-                                        <p><h4 style="display:inline;font-size:large">Fee: </h4><span>@slots.fee</span></p>
-                                        <p><h4 style="display:inline;font-size:large">Age Limit: </h4><span>@slots.min_age_limit</span></p>
-                                        <p><h4 style="display:inline;font-size:large">Pincode: </h4><span>@slots.pincode</span></p>
-                                        <p><h4 style="display:inline;font-size:large">Vaccine: </h4><span>@slots.vaccine</span></p>
-                                        <a href="https://selfregistration.cowin.gov.in/" class="button" target="_blank">Book Vaccination</a>
-                                    </div>
+                                        <div class="cell small-12 panel callout radius">
+                                            @if (slots.available_capacity_dose1 != 0)
+                                            {
+                                                <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose1</span></p>
+                                            }
+                                            else if (slots.available_capacity_dose2 != 0)
+                                            {
+                                                <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose2</span></p>
+                                            }
+                                            <p><h4 style="display:inline;font-size:large">Address: </h4><span>@slots.address</span></p>
+                                            <p><h4 style="display:inline;font-size:large">Name: </h4><span>@slots.name</span></p>
+                                            <p><h4 style="display:inline;font-size:large">Fee: </h4><span>@slots.fee</span></p>
+                                            <p><h4 style="display:inline;font-size:large">Age Limit: </h4><span>@slots.min_age_limit</span></p>
+                                            <p><h4 style="display:inline;font-size:large">Pincode: </h4><span>@slots.pincode</span></p>
+                                            <p><h4 style="display:inline;font-size:large">Vaccine: </h4><span>@slots.vaccine</span></p>
+                                            <a href="https://selfregistration.cowin.gov.in/" class="button" target="_blank">Book Vaccination</a>
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -193,6 +205,8 @@
     string selectedAnswer = "";
     string age = "";
 
+    DateTime datetime= DateTime.UtcNow.Date;
+
     void SelectionChanged(ChangeEventArgs args)
     {
         selectedAnswer = args.Value.ToString();
@@ -250,6 +264,9 @@
         flagSlot = true;
         slotResponse.slot = new List<slot>();
 
+        var tempValue = datetime.ToString("dd/MM/yyyy");
+        date = tempValue;
+        
         var dateinp = date;
         if (string.IsNullOrEmpty(date))
         {

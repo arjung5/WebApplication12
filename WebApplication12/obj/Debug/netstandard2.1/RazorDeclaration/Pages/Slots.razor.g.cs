@@ -105,7 +105,7 @@ using Newtonsoft.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 170 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
+#line 182 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
        
     private string responseBody;
     private string forecasts;
@@ -131,6 +131,8 @@ using Newtonsoft.Json;
     string dosage = "";
     string selectedAnswer = "";
     string age = "";
+
+    DateTime datetime= DateTime.UtcNow.Date;
 
     void SelectionChanged(ChangeEventArgs args)
     {
@@ -189,6 +191,9 @@ using Newtonsoft.Json;
         flagSlot = true;
         slotResponse.slot = new List<slot>();
 
+        var tempValue = datetime.ToString("dd/MM/yyyy");
+        date = tempValue;
+        
         var dateinp = date;
         if (string.IsNullOrEmpty(date))
         {
