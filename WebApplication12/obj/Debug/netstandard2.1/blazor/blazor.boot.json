@@ -6,7 +6,7 @@
   "linkerEnabled": false,
   "resources": {
     "assembly": {
-      "WebApplication12.dll": "sha256-tD31LuIBvDxodxtN4OlZfbC++b48z7ps7g4xfLK+NZY=",
+      "WebApplication12.dll": "sha256-QlS1roYmEr41zCkfjVKgPP5lmAhKzLxuxN11d+dbIME=",
       "Newtonsoft.Json.dll": "sha256-cs8pHUurDt0IqbB8YXPh560au3q3J\/1wRL9jBddRVmE=",
       "netstandard.dll": "sha256-\/zcPVM75OAY+joGVM8yIC1gO1SFYWP1CFERgQ8PJkfA=",
       "System.Xml.Linq.dll": "sha256-IPbQMdJxZXdk8HTlaPyXdQ6Zb82iZLphnM74yO4EURQ=",
@@ -61,7 +61,7 @@
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-czNf3btAeBW\/vvID5LAfgcsNZ+GM3ssVuPaMflcg0rs="
     },
     "pdb": {
-      "WebApplication12.pdb": "sha256-P\/dtiHHHDkSWdnKpXy\/ZVKu9rlqmvOxaY9C6ihrG0KQ="
+      "WebApplication12.pdb": "sha256-7y2wZCfWqp2nfNqkxipl7FK6XArH3S4ss9qmX33IjkQ="
     },
     "runtime": {
       "dotnet.3.2.0.js": "sha256-mPoqx7XczFHBWk3gRNn0hc9ekG1OvkKY4XiKRY5Mj5U=",

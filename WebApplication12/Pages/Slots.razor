@@ -60,68 +60,108 @@
 {
     @if (flagSlot)
     {
-        <p><em>Loading...</em></p>
+        <p style="margin-top:10px"><em>Loading...</em></p>
     }
     else
     {
-        if (slotResponse.slot.Count != 0)
-        {
-            <p class="margin-top-10">
-                Slots Available: @slotResponse.slot.Count
-            </p>
-            <div class="grid-container">
-                <div class="grid-x">
-                    <div class="cell small-12">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Dose</th>
-                                    <th>Address</th>
-                                    <th>District Name</th>
-                                    <th>Fee</th>
-                                    <th>Min_Age_Limit</th>
-                                    <th>Name</th>
-                                    <th>Pincode</th>
-                                    <th>State Name</th>
-                                    <th>Vaccine</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var slots in slotResponse.slot)
-                                {
-                                    <tr>
+        <div class="grid-container">
+            <div class="grid-x">
+                <div class="cell">
+                    <div class="show-for-small-only">
+                        @if (slotResponse.slot.Count != 0)
+                        {
+                            <p style="margin-top:10px">
+                                Slots Available: @slotResponse.slot.Count
+                            </p>
+                            <div class="grid-container">
+                                <div class="grid-x">
+
+                                    @foreach (var slots in slotResponse.slot)
+                                    {
+                                    <div class="cell small-12 panel callout radius">
                                         @if (slots.available_capacity_dose1 != 0)
                                         {
-                                            <td>@slots.available_capacity_dose1</td>
+                                            <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose1</span></p>
                                         }
                                         else if (slots.available_capacity_dose2 != 0)
                                         {
-                                            <td>@slots.available_capacity_dose2</td>
+                                            <p><h4 style="display:inline;font-size:large">Dose Available: </h4><span>@slots.available_capacity_dose2</span></p>
                                         }
+                                        <p><h4 style="display:inline;font-size:large">Address: </h4><span>@slots.address</span></p>
+                                        <p><h4 style="display:inline;font-size:large">Name: </h4><span>@slots.name</span></p>
+                                        <p><h4 style="display:inline;font-size:large">Fee: </h4><span>@slots.fee</span></p>
+                                        <p><h4 style="display:inline;font-size:large">Age Limit: </h4><span>@slots.min_age_limit</span></p>
+                                        <p><h4 style="display:inline;font-size:large">Pincode: </h4><span>@slots.pincode</span></p>
+                                        <p><h4 style="display:inline;font-size:large">Vaccine: </h4><span>@slots.vaccine</span></p>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="show-for-medium">
+                        @if (slotResponse.slot.Count != 0)
+                        {
+                            <p class="margin-top-10">
+                                Slots Available: @slotResponse.slot.Count
+                            </p>
+                            <div class="grid-container">
+                                <div class="grid-x">
+                                    <div class="cell small-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dose</th>
+                                                    <th>Address</th>
+                                                    <th>District Name</th>
+                                                    <th>Fee</th>
+                                                    <th>Min_Age_Limit</th>
+                                                    <th>Name</th>
+                                                    <th>Pincode</th>
+                                                    <th>State Name</th>
+                                                    <th>Vaccine</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var slots in slotResponse.slot)
+                                                {
+                                                    <tr>
+                                                        @if (slots.available_capacity_dose1 != 0)
+                                                        {
+                                                            <td>@slots.available_capacity_dose1</td>
+                                                        }
+                                                        else if (slots.available_capacity_dose2 != 0)
+                                                        {
+                                                            <td>@slots.available_capacity_dose2</td>
+                                                        }
 
-                                        <td>@slots.address</td>
-                                        <td>@slots.district_name</td>
-                                        <td>@slots.fee</td>
-                                        <td>@slots.min_age_limit</td>
-                                        <td>@slots.name</td>
-                                        <td>@slots.pincode</td>
-                                        <td>@slots.state_name</td>
-                                        <td>@slots.vaccine</td>
-                                    </tr>
+                                                        <td>@slots.address</td>
+                                                        <td>@slots.district_name</td>
+                                                        <td>@slots.fee</td>
+                                                        <td>@slots.min_age_limit</td>
+                                                        <td>@slots.name</td>
+                                                        <td>@slots.pincode</td>
+                                                        <td>@slots.state_name</td>
+                                                        <td>@slots.vaccine</td>
+                                                    </tr>
 
 
-                                }
-                            </tbody>
-                        </table>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <p class="margin-top-10">Sorry , No Slots are Present</p>
+                        }
                     </div>
                 </div>
             </div>
-
-        }
-        else
-        {
-            <p class="margin-top-10">Sorry , No Slots are Present</p>
-        }
+        </div>
     }
 }
 
