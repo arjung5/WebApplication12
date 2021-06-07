@@ -105,7 +105,7 @@ using Newtonsoft.Json;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 169 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
+#line 170 "E:\leaningnetlify\WebApplication12\WebApplication12\Pages\Slots.razor"
        
     private string responseBody;
     private string forecasts;
@@ -164,7 +164,7 @@ using Newtonsoft.Json;
         public enum Colors { Red, Green, Blue, Yellow };
         public enum VaccineType { Covishield, Covaxin };
         public enum AgeGroup { Above45, Below45 };
-        public enum Dosage { First, Second };
+        public enum Dosage { FirstDose, SecondDose };
 
     }
 
